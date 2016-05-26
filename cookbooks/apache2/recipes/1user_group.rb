@@ -1,6 +1,6 @@
 #Create Group Apps
 group "apps" do
-   gid 600
+   gid 300
 end
 
 # Create custapache User..the password require ruby-shadow package
