@@ -1,0 +1,258 @@
+# Virtual Hosts
+#
+# If you want to maintain multiple domains/hostnames on your
+# machine you can setup VirtualHost containers for them. Most configurations
+# use only name-based virtual hosts so the server doesn't need to worry about
+# IP addresses. This is indicated by the asterisks in the directives below.
+#
+# Please see the documentation at 
+# <URL:http://httpd.apache.org/docs/2.2/vhosts/>
+# for further details before you try to setup virtual hosts.
+#
+# You may use the command line option '-S' to verify your virtual host
+# configuration.
+
+#
+# Use name-based virtual hosting.
+#
+NameVirtualHost *:7785
+
+#
+# VirtualHost example:
+# Almost any Apache directive may go into a VirtualHost container.
+# The first VirtualHost section is used for all requests that do not
+# match a ServerName or ServerAlias in any <VirtualHost> block.
+#
+
+
+
+<VirtualHost *:7785>
+    ServerAdmin root@localhost
+    DocumentRoot "/product/apache2/avs42hyderabad"
+    ServerName avs42-hyderabad.avs-accenture.com
+    ErrorLog "logs/avs42hyderabad_FE_log"
+    CustomLog "logs/avs42hyderabad_FE-access_log" common
+    RequestHeader set AVSSite http://avs42-hyderabad.avs-accenture.com
+
+    #ProxyPassMatch ^/AVS/besc(.*) http://10.0.3.190:8080/AVS/besc$1
+
+    <Directory "/product/apache2/avs42hyderabad">
+        AuthType Basic
+       #AuthName "Restricted Access Site"
+       #AuthUserFile /product/apache2/http_auth/.htpasswd-all
+       #require valid-user
+
+        DirectoryIndex index.html
+        Options -Indexes FollowSymLinks
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+
+    </Directory>
+
+    <Directory "/product/apache2/avs42hyderabad/json">
+        Satisfy Any
+        Allow from all
+        Options -Indexes FollowSymLinks MultiViews
+    </Directory>
+
+    <Directory "/product/apache2/avs42hyderabad/config">
+        AllowOverride All
+    </Directory>
+
+    <Directory "/product/apache2/avs42hyderabad/img">
+        Options -Indexes FollowSymLinks Multiviews
+        Allow from all
+        Satisfy any
+    </Directory>
+
+    <Directory "/product/apache2/avs42hyderabad/app/blue1">
+        Options -Indexes FollowSymLinks Multiviews
+        Allow from all
+        Satisfy any
+    </Directory>
+
+    <Directory "/product/apache2/avs42hyderabad/stub_evo">
+        Options -Indexes FollowSymLinks Multiviews
+        Allow from all
+        Satisfy any
+    </Directory>
+
+    <Directory "/product/apache2/avs42hyderabad/app">
+        Options -Indexes FollowSymLinks Multiviews
+        Allow from all
+        Satisfy any
+    </Directory>
+ 
+    <Directory "/product/apache2/avs42hyderabad/invoice">
+        Options -Indexes FollowSymLinks Multiviews
+        Allow from all
+        Satisfy any
+    </Directory>
+
+    <Directory "/product/apache2/avs42hyderabad/adv_ottv">
+        Options -Indexes FollowSymLinks Multiviews
+        Allow from all
+        Satisfy any
+    </Directory>
+
+    <Directory "/product/apache2/avs42hyderabad/acn_widget">
+        Options -Indexes FollowSymLinks Multiviews
+        Allow from all
+        Satisfy any
+    </Directory>
+
+    <Directory "/product/apache2/avs42hyderabad/mail">
+        Options -Indexes FollowSymLinks Multiviews
+        Allow from all
+        Satisfy any
+    </Directory>
+
+
+    <Directory "/product/apache2/avs42hyderabad/stub">
+        Options -Indexes FollowSymLinks Multiviews
+        Allow from all
+        Satisfy any
+    </Directory>
+
+    <Directory "/product/apache2/avs42hyderabad/GSkslUIUD">
+        Options -Indexes FollowSymLinks Multiviews
+        Deny from all
+        Satisfy any
+    </Directory>
+
+    <Files "/GSkslUIUD/hjSHUIh">
+        Satisfy Any
+        Deny from all
+    </Files>
+
+    <LocationMatch "/AVS/.*">
+        order allow,deny
+        allow from all
+        Satisfy any
+    </LocationMatch>
+
+    <LocationMatch "/AMS/.*">
+        order allow,deny
+        allow from all
+        Satisfy any
+    </LocationMatch>
+
+    <LocationMatch "/FAQ/.*">
+        order allow,deny
+        allow from all
+        Satisfy any
+    </LocationMatch>
+
+    <LocationMatch "/CDN/.*">
+        order allow,deny
+        allow from all
+        Satisfy any
+    </LocationMatch>
+
+    <LocationMatch "/RL/.*">
+        order allow,deny
+        allow from all
+        Satisfy any
+    </LocationMatch>
+
+
+    <LocationMatch "/stub/.*">
+        order allow,deny
+        allow from all
+        Satisfy any
+    </LocationMatch>
+
+    <LocationMatch "/invoice/.*">
+        order allow,deny
+        allow from all
+        Satisfy any
+    </LocationMatch>
+
+<LocationMatch "/health.html">
+        order allow,deny
+        allow from all
+        Satisfy any
+    </LocationMatch>
+
+  <Files "GetSync.php">
+        Satisfy Any
+        Allow from all
+  </Files>
+
+  <Files "GetPersonalVideos.php">
+        Satisfy Any
+        Allow from all
+  </Files>
+
+  <Files "upload.php">
+        Satisfy Any
+        Allow from all
+  </Files>
+
+  <Files "uploadVideo.php">
+        Satisfy Any
+        Allow from all
+  </Files>
+
+  <Files "SetPlay.php">
+        Satisfy Any
+        Allow from all
+  </Files>
+
+  <Files ~ "\.xml?">
+        Satisfy Any
+        Allow from all
+  </Files>
+
+  <Files ~ "\.txt?">
+        Satisfy Any
+        Allow from all
+  </Files>
+
+  <Files ~ "\.json?">
+        Satisfy Any
+        Allow from all
+  </Files>
+
+</VirtualHost>
+
+<VirtualHost *:7785>
+    ServerAdmin root@localhost
+    DocumentRoot "/product/apache2/console"
+    ServerName avs42cabconsole-hyderabad.avs-accenture.com
+    ServerAlias noncdn-console.it.starsports.com
+    ErrorLog "logs/avs42hyderabad_FE-console.log"
+    CustomLog "logs/avs42hyderabad_FE-console-access_log" common
+
+    <Directory "/product/apache2/console">
+#        AuthType Basic
+#        AuthName "Restricted Access Site"
+#        AuthUserFile /product/apache2/http_auth/.htpasswd-all
+#        require valid-user
+
+        DirectoryIndex index.php
+        Options -Indexes FollowSymLinks
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+
+    <LocationMatch "/AVS/.*">
+        order allow,deny
+        allow from all
+        Satisfy any
+    </LocationMatch>
+
+<LocationMatch "/CheckConnection.test">
+        order allow,deny
+        allow from all
+        Satisfy any
+    </LocationMatch>
+
+    <Files ~ "\.txt?">
+        Satisfy Any
+        Allow from all
+    </Files>
+
+</VirtualHost>
